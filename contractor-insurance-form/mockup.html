@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contractor Insurance Portal — Design Preview</title>
+<style>
+  :root{
+    --green:#7a9a5b; --green-d:#5f7d43; --ink:#1f2933; --muted:#6b7684;
+    --line:#e3e7ec; --bg:#f4f6f8; --card:#ffffff; --brand:#4b3f8f;
+    --ok:#1f8a52; --okbg:#e6f4ec; --warn:#b7791f; --warnbg:#fdf4e3;
+    --bad:#c0392b; --badbg:#fbeae8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  h1.title{font-size:26px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 28px}
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:0 0 34px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .stage-head{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+  .badge{background:var(--brand);color:#fff;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px}
+  .stage-head h2{font-size:16px;margin:0}
+  .stage-head p{margin:0;color:var(--muted);font-size:13px}
+  .stage-body{padding:22px}
+
+  /* browser chrome */
+  .browser{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .bar{background:#eef0f3;padding:8px 12px;display:flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .url{margin-left:12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 12px;font-size:12px;color:var(--muted);flex:1}
+
+  /* portal */
+  .portal-head{background:#c8d6b4;padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;color:#3d4a2b}
+  .logo .ring{width:26px;height:26px;border:4px solid #7a9a5b;border-radius:50%}
+  .nav{color:#5c6b45;font-size:13px}
+  .portal-body{padding:26px 30px;background:#fbfcfa}
+  .portal-body h3{margin:0 0 4px;font-size:20px}
+  .portal-body .intro{color:var(--muted);font-size:13px;margin:0 0 20px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:4px}
+  .field .inp{border:1px solid var(--line);border-radius:7px;padding:9px 11px;font-size:13px;color:#333;background:#fff}
+  .req{color:#c0392b}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .section-lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green-d);margin:22px 0 10px;border-top:1px dashed var(--line);padding-top:16px}
+  .ins-card{border:1px solid var(--line);border-radius:9px;padding:14px;margin-bottom:12px;background:#fff}
+  .ins-card .top{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px}
+  .upload{border:2px dashed #b9c4a6;border-radius:8px;padding:14px;text-align:center;font-size:12.5px;color:var(--green-d);background:#f4f7ee}
+  .upload b{display:block}
+  .btn{background:var(--green);color:#fff;border:none;border-radius:7px;padding:11px 22px;font-size:14px;font-weight:600;margin-top:8px;cursor:pointer}
+  .pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600}
+  .pill.pl{background:#eef1fb;color:#4b3f8f}
+
+  /* excel */
+  .xls-tabs{display:flex;gap:2px;background:#f1f3f5;padding:6px 10px 0}
+  .xls-tab{font-size:12px;padding:6px 14px;border-radius:6px 6px 0 0;color:var(--muted)}
+  .xls-tab.active{background:#fff;color:var(--ink);font-weight:600;border:1px solid var(--line);border-bottom:none}
+  .tablewrap{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:12px;min-width:820px}
+  th{background:#217346;color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap}
+  td{padding:7px 10px;border:1px solid #e6e9ec;white-space:nowrap}
+  tr:nth-child(even) td{background:#f4f8f5}
+  .st-ok{color:var(--ok);font-weight:700}
+  .st-bad{color:var(--bad);font-weight:700}
+  .arrow{text-align:center;color:var(--brand);font-size:22px;margin:-20px 0 14px}
+
+  /* emails */
+  .mail{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .mail-h{padding:10px 14px;font-size:13px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line)}
+  .mail-h .subj{font-weight:700}
+  .mail-b{padding:14px;font-size:13px;color:#333}
+  .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px}
+  .tag.a{background:var(--warnbg);color:var(--warn)}
+  .tag.b{background:#eef1fb;color:var(--brand)}
+  .tag.c{background:var(--badbg);color:var(--bad)}
+  .mail.a{border-left:4px solid var(--warn)}
+  .mail.b{border-left:4px solid var(--brand)}
+  .mail.c{border-left:4px solid var(--bad)}
+  .legend{font-size:12px;color:var(--muted);margin-top:8px}
+  .flowline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:6px}
+  .chip{background:#eef0f3;border-radius:20px;padding:5px 12px;color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="title">Contractor Insurance Portal — Design Preview</h1>
+  <p class="sub">How the finished system looks end to end. This is a visual mock — the real thing is what you're building in Power Pages, Dataverse, Power Automate & Excel.</p>
+
+  <!-- FLOW OVERVIEW -->
+  <div class="stage">
+    <div class="stage-head"><span class="badge">FLOW</span><div><h2>The whole journey</h2></div></div>
+    <div class="stage-body">
+      <div class="flowline">
+        <span class="chip">1 · Contractor fills portal + uploads certs</span> →
+        <span class="chip">2 · Saved to Dataverse</span> →
+        <span class="chip">3 · Auto-fills Excel register</span> →
+        <span class="chip">4 · Manager alerted before expiry</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 1: PORTAL -->
+  <div class="stage">
+    <div class="stage-head"><span class="badge">SCREEN 1</span><div><h2>What the contractor sees</h2><p>Public web page — no login needed</p></div></div>
+    <div class="stage-body">
+      <div class="browser">
+        <div class="bar">
+          <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+          <span class="url">recycling-parks-contractor.powerappsportals.com/register-renew</span>
+        </div>
+        <div class="portal-head">
+          <div class="logo"><span class="ring"></span> Recycling Parks</div>
+          <div class="nav">Register or Renew</div>
+        </div>
+        <div class="portal-body">
+          <h3>Contractor Insurance &amp; Pre-Qualification</h3>
+          <p class="intro">Please complete your details, enter your insurance expiry dates, and upload each Certificate of Currency. Takes ~5 minutes.</p>
+
+          <div class="section-lbl">Contractor Details</div>
+          <div class="field"><label>Contractor / Company Name <span class="req">*</span></label><div class="inp">Attard Fabrications</div></div>
+          <div class="field"><label>Services Provided <span class="req">*</span></label><div class="inp">Mechanical services and welding</div></div>
+          <div class="row2">
+            <div class="field"><label>Transport Operator? <span class="req">*</span></label><div class="inp">No ▾</div></div>
+            <div class="field"><label>Contact Person <span class="req">*</span></label><div class="inp">Cameron Attard</div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Email <span class="req">*</span></label><div class="inp">cameron@attardfabrications.com</div></div>
+            <div class="field"><label>Phone <span class="req">*</span></label><div class="inp">+61 4xx xxx xxx</div></div>
+          </div>
+
+          <div class="section-lbl">Insurances — enter expiry &amp; upload the certificate</div>
+          <div class="ins-card">
+            <div class="top"><span class="pill pl">Public Liability</span><span>Insurance 1</span></div>
+            <div class="row2">
+              <div class="field"><label>Insurer</label><div class="inp">CGU Insurance</div></div>
+              <div class="field"><label>COC Expiry Date</label><div class="inp">15 / 09 / 2026</div></div>
+            </div>
+            <div class="upload"><b>📎 Attard_PublicLiability.pdf</b>uploaded ✔</div>
+          </div>
+          <div class="ins-card">
+            <div class="top"><span class="pill pl">Workers Compensation</span><span>Insurance 2</span></div>
+            <div class="row2">
+              <div class="field"><label>Insurer</label><div class="inp">WorkCover QLD</div></div>
+              <div class="field"><label>COC Expiry Date</label><div class="inp">30 / 06 / 2026</div></div>
+            </div>
+            <div class="upload"><b>Drag &amp; drop or choose file</b>PDF, JPG or PNG</div>
+          </div>
+
+          <button class="btn">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">▼ auto-populates ▼</div>
+
+  <!-- STAGE 2: EXCEL -->
+  <div class="stage">
+    <div class="stage-head"><span class="badge">SCREEN 2</span><div><h2>Your register fills itself</h2><p>Every submission becomes a row — your familiar spreadsheet</p></div></div>
+    <div class="stage-body">
+      <div class="browser">
+        <div class="xls-tabs">
+          <span class="xls-tab active">Register (Auto)</span>
+          <span class="xls-tab">Contractor Management</span>
+          <span class="xls-tab">Data</span>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>Contractor Name</th><th>Transport</th><th>Email</th>
+              <th>Public Liability Expiry</th><th>Workers Comp Expiry</th><th>Plant &amp; MV Expiry</th><th>Status</th>
+            </tr>
+            <tr><td>Attard Fabrications</td><td>No</td><td>cameron@attard…</td><td>15/09/2026</td><td>30/06/2026</td><td>—</td><td class="st-ok">Compliant</td></tr>
+            <tr><td>Beta Recycling</td><td>Yes</td><td>mary@beta…</td><td>02/07/2026</td><td>19/02/2026</td><td>10/08/2026</td><td class="st-bad">Non-Compliant</td></tr>
+            <tr><td>Gamma Transport</td><td>Yes</td><td>alan@gamma…</td><td>09/03/2027</td><td>15/12/2026</td><td>01/05/2027</td><td class="st-ok">Compliant</td></tr>
+          </table>
+        </div>
+      </div>
+      <p class="legend">Status flips to <span class="st-bad">Non-Compliant</span> automatically the day any certificate expires.</p>
+    </div>
+  </div>
+
+  <div class="arrow">▼ watches expiry dates daily ▼</div>
+
+  <!-- STAGE 3: EMAILS -->
+  <div class="stage">
+    <div class="stage-head"><span class="badge">SCREEN 3</span><div><h2>Your manager gets alerted</h2><p>30-day notice → daily reminders in the final 10 days → expired alert</p></div></div>
+    <div class="stage-body">
+      <div class="mail a">
+        <div class="mail-h"><span class="tag a">30 DAYS</span><span class="subj">30-DAY NOTICE: Beta Recycling — Workers Comp expiring</span><span style="margin-left:auto;color:var(--muted);font-size:12px">to: Manager</span></div>
+        <div class="mail-b">Beta Recycling's Workers Compensation expires on <b>19/02/2026</b> (30 days). Please follow up for renewal.</div>
+      </div>
+      <div class="mail b">
+        <div class="mail-h"><span class="tag b">DAILY · 10→0</span><span class="subj">REMINDER: Beta Recycling — 7 days to expiry</span><span style="margin-left:auto;color:var(--muted);font-size:12px">to: Manager</span></div>
+        <div class="mail-b">Workers Compensation expires on <b>19/02/2026</b> — 7 days left. Action required. <i>(This reminder repeats every day until renewed.)</i></div>
+      </div>
+      <div class="mail c">
+        <div class="mail-h"><span class="tag c">EXPIRED</span><span class="subj">EXPIRED: Beta Recycling — now Non-Compliant</span><span style="margin-left:auto;color:var(--muted);font-size:12px">to: Manager</span></div>
+        <div class="mail-b">Workers Compensation lapsed on <b>19/02/2026</b>. Contractor status set to <b>Non-Compliant</b> in the register.</div>
+      </div>
+      <p class="legend">Reminders stop automatically once the contractor re-uploads and a new expiry date is entered.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
